@@ -27,6 +27,12 @@ namespace FormsApp.Droid
 		public static void UpdateIdValues()
 		{
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::FormsApp.Droid.Resource.Attribute.actionBarSize;
+			global::ZXing.Mobile.Resource.Id.contentFrame = global::FormsApp.Droid.Resource.Id.contentFrame;
+			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::FormsApp.Droid.Resource.Layout.zxingscanneractivitylayout;
+			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::FormsApp.Droid.Resource.Layout.zxingscannerfragmentlayout;
+			global::ZXing.Net.Mobile.Forms.Android.Resource.Layout.zxingscanneractivitylayout = global::FormsApp.Droid.Resource.Layout.zxingscanneractivitylayout;
+			global::ZXing.Net.Mobile.Forms.Android.Resource.Layout.zxingscannerfragmentlayout = global::FormsApp.Droid.Resource.Layout.zxingscannerfragmentlayout;
+			global::ZXing.Net.Mobile.Forms.Android.Resource.String.library_name = global::FormsApp.Droid.Resource.String.library_name;
 		}
 		
 		public partial class Animation
@@ -2312,6 +2318,9 @@ namespace FormsApp.Droid
 			// aapt resource value: 0x7f0b0036
 			public const int collapseActionView = 2131427382;
 			
+			// aapt resource value: 0x7f0b009a
+			public const int contentFrame = 2131427482;
+			
 			// aapt resource value: 0x7f0b004a
 			public const int contentPanel = 2131427402;
 			
@@ -2930,6 +2939,12 @@ namespace FormsApp.Droid
 			// aapt resource value: 0x7f030038
 			public const int Toolbar = 2130903096;
 			
+			// aapt resource value: 0x7f030039
+			public const int zxingscanneractivitylayout = 2130903097;
+			
+			// aapt resource value: 0x7f03003a
+			public const int zxingscannerfragmentlayout = 2130903098;
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -3008,6 +3023,9 @@ namespace FormsApp.Droid
 			
 			// aapt resource value: 0x7f060011
 			public const int character_counter_pattern = 2131099665;
+			
+			// aapt resource value: 0x7f060026
+			public const int library_name = 2131099686;
 			
 			// aapt resource value: 0x7f060000
 			public const int mr_button_content_description = 2131099648;
