@@ -1,4 +1,7 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using ZXing.Net.Mobile.Forms;
 
 namespace FormsApp
 {
@@ -174,19 +177,32 @@ namespace FormsApp
 
 		/// <summary>
 		/// MasterDetailPage.
-		/// 
 		/// </summary>
 		class MyMasterDetailPage : MasterDetailPage
 		{
 			public MyMasterDetailPage()
 			{
-				var ar = new[] { "About", "Videoes", "Setting" };
+                // スキャンボタン
+                var button1 = new Button
+                {
+                    Text = "Scan",
+                };
+                button1.Clicked += ScanButtonClicked;
+
+                var ar = new[] { "VideoPlayer", "StoredItems", "Setting" };
 
 				ListView listView = new ListView
 				{
 					ItemsSource = ar,
 					//BackgroundColor = Color.Transparent
 				};
+
+                // ツールバーアイテム
+                this.ToolbarItems.Add(new ToolbarItem()
+                {
+                    Name = "SCAN",
+                    Command = new Command(async () => await ScanCommand())
+                });
 
 				// マスターページ
 				this.Master = new ContentPage
@@ -197,8 +213,10 @@ namespace FormsApp
 					Padding = new Thickness(0, Device.OnPlatform(20, 20, 0), 0, 0),
 					Title = "Master", // 必須
 					Icon = "menu.png",
-					Content = listView,
-
+					Content = new StackLayout()
+                    {
+                        Children = {button1, listView }
+                    },
 				};
 
 				// リストが選択された際のイベント処理
@@ -217,7 +235,50 @@ namespace FormsApp
 				listView.SelectedItem = ar[0];// 必須　最初のページをセットする
 
 			}
-		}
+
+            public async Task ScanCommand()
+            {
+                var scanPage = new ZXingScannerPage()
+                {
+                    DefaultOverlayTopText = "バーコードを読み取ります",
+                    DefaultOverlayBottomText = "",
+                };
+                await Navigation.PushModalAsync(scanPage);
+
+                scanPage.OnScanResult += (result) =>
+                {
+                    scanPage.IsScanning = false;
+
+                    Device.BeginInvokeOnMainThread(async () =>
+                    {
+                        await Navigation.PopModalAsync();
+                        await DisplayAlert("", result.Text, "OK");
+                    });
+                };
+            }
+
+            async void ScanButtonClicked(object sender, EventArgs s)
+            {
+                var scanPage = new ZXingScannerPage()
+                {
+                    DefaultOverlayTopText = "バーコードを読み取ります",
+                    DefaultOverlayBottomText = "",
+                };
+                await Navigation.PushModalAsync(scanPage);
+
+                scanPage.OnScanResult += (result) =>
+                {
+                    scanPage.IsScanning = false;
+
+                    Device.BeginInvokeOnMainThread(async () =>
+                    {
+                        await Navigation.PopModalAsync();
+                        await DisplayAlert("", result.Text, "OK");
+                    });
+                };
+            }
+            
+        }
 
 		//詳細ページ
 		class DetailPage : ContentPage
@@ -230,7 +291,7 @@ namespace FormsApp
 					//テキストを中央に表示する
 					Text = title,
 					HorizontalOptions = LayoutOptions.Center,
-					VerticalOptions = LayoutOptions.Center
+					VerticalOptions = LayoutOptions.Center,
 				};
 
 			}
@@ -239,6 +300,7 @@ namespace FormsApp
 		/// <summary>
 		/// Todo item.
 		/// </summary>
+        /// 
 		class TodoItem
 		{
 			public string Name
@@ -252,8 +314,6 @@ namespace FormsApp
 				set;
 			}
 		}
-
-
 
 		protected override void OnStart()
 		{
